@@ -159,5 +159,5 @@ x509.genkey
 sphinx_*/
 
 # Allow github actions
-!.github/workflows/
+!.github/workflows/*
 
