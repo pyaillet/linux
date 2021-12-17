@@ -7,6 +7,7 @@ jobs:
       ARCH: arm64
       KERNEL: kernel8
       CONFIG_LOCALVERSION: "-v8l-custom"
+      CROSS_COMPILE: aarch64-linux-gnu-
     steps:
       - uses: actions/checkout@v2
         with:
@@ -14,7 +15,8 @@ jobs:
           ref: rpi-5.10.y
       - name: build kernel
         run: |
-          sudo apt update && sudo apt install -y build-essential gcc-aarch64-linux-gnu git bc bison flex libssl-dev make
+          sudo apt update && sudo apt install -y git bc bison flex libssl-dev make crossbuild-essential-arm64
+          nproc
           ls -l
           pwd
           make bcm2711_defconfig
