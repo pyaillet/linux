@@ -16,12 +16,8 @@ jobs:
       - name: build kernel
         run: |
           sudo apt update && sudo apt install -y git bc bison flex libssl-dev make crossbuild-essential-arm64
-          nproc
-          ls -l
-          pwd
           make bcm2711_defconfig
-          make -j4 Image modules dtbs
-          make modules_install
+          make -j3 Image modules dtbs
           cp /usr/src/linux/arch/arm64/boot/dts/broadcom/*.dtb /target/boot/
           cp /usr/src/linux/arch/arm64/boot/dts/overlays/*.dtb* /target/boot/overlays/
           cp /usr/src/linux/arch/arm64/boot/dts/overlays/README /target/boot/overlays/
