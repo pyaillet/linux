@@ -8,6 +8,10 @@ jobs:
       KERNEL: kernel8
       CONFIG_LOCALVERSION: "-v8l-custom"
     steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+          ref: rpi-5.10.y
       - name: build kernel
         run: |
           sudo apt update && sudo apt install -y build-essential gcc-aarch64-linux-gnu git bc bison flex libssl-dev make
