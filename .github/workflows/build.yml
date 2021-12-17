@@ -10,7 +10,7 @@ jobs:
     steps:
       - name: build kernel
         run: |
-          apt update && apt install -y build-essential gcc-aarch64-linux-gnu git bc bison flex libssl-dev make
+          sudo apt update && sudo apt install -y build-essential gcc-aarch64-linux-gnu git bc bison flex libssl-dev make
           make bcm2711_defconfig
           make -j4 Image modules dtbs
           make modules_install
