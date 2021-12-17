@@ -1,0 +1,26 @@
+name: Build rpi kernel github action
+on: [push]
+jobs:
+  build-rpi-kernel:
+    runs-on: ubuntu-latest
+    env:
+      ARCH: arm64
+      KERNEL: kernel8
+      CONFIG_LOCALVERSION: "-v8l-custom"
+    steps:
+      - name: build kernel
+        run: |
+          apt update && apt install -y build-essential gcc-aarch64-linux-gnu git bc bison flex libssl-dev make
+          make bcm2711_defconfig
+          make -j4 Image modules dtbs
+          make modules_install
+          cp /usr/src/linux/arch/arm64/boot/dts/broadcom/*.dtb /target/boot/
+          cp /usr/src/linux/arch/arm64/boot/dts/overlays/*.dtb* /target/boot/overlays/
+          cp /usr/src/linux/arch/arm64/boot/dts/overlays/README /target/boot/overlays/
+          cp /usr/src/linux/arch/arm64/boot/Image /target/boot/$KERNEL.img
+
+      - name: Archive boot fs
+        uses: actions/upload-artifact@v2
+        with:
+          name: boot
+          path: /target/boot
